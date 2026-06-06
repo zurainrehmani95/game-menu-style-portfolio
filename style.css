@@ -1,0 +1,247 @@
+/* Reset and Base Theme */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+body {
+    background-color: #0a0a0a;
+    color: #e0e0e0;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    
+    /* Prevents highlighting text across the whole menu */
+    user-select: none; 
+}
+
+/* Background GIF */
+#bg-gif {
+    position: fixed;
+    top: 0;
+    left: 0;
+    min-width: 100vw;
+    min-height: 100vh;
+    width: auto;
+    height: auto;
+    z-index: -2; 
+    object-fit: cover; 
+    image-rendering: pixelated; 
+    
+    /* THE FIX: Locks the image so it cannot be clicked, dragged, or saved */
+    pointer-events: none;
+    user-select: none;
+    -webkit-user-drag: none;
+}
+
+/* ===========================================
+THE VIGNETTE EFFECT 
+===========================================
+*/
+.bg-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    /* Radial gradient creates a dark shadow around the edges and keeps the center clear */
+    background: radial-gradient(circle at center, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0.85) 100%);
+    z-index: -1; 
+}
+
+/* CRT Scanlines */
+.bg-overlay::after {
+    content: " ";
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), 
+                linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+    z-index: 2;
+    background-size: 100% 2px, 3px 100%;
+    pointer-events: none;
+}
+
+/* ===========================================
+LAYOUT: TWO COLUMNS 
+===========================================
+*/
+.menu-container {
+    display: flex;
+    justify-content: space-around; /* Pushes the title left and menu right */
+    align-items: center;
+    width: 100%;
+    max-width: 1200px; /* Wider container to allow separation */
+    padding: 2rem;
+    position: relative;
+    z-index: 10;
+}
+
+.title-section {
+    /* Shifts the title upward toward the moon in your background */
+    transform: translateY(-80px);
+    text-align: left;
+}
+
+/* Title Styling */
+.game-title {
+    font-size: 3.5rem; /* Slightly larger */
+    font-weight: bold;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    text-shadow: 3px 3px 0px rgba(0,0,0,0.8); /* Stronger drop shadow to pop against background */
+}
+
+.game-title span {
+    font-size: 1.2rem;
+    color: #a8a8a8;
+    letter-spacing: 3px;
+}
+
+/* Menu Options */
+.main-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem; /* Spread options out a bit more */
+    text-align: left;
+}
+
+.menu-item {
+    text-decoration: none;
+    color: #b3b3b3;
+    font-size: 1.5rem;
+    font-weight: bold;
+    transition: all 0.2s ease-in-out;
+    position: relative;
+    padding-left: 0;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
+}
+
+.menu-item:hover {
+    color: #ffffff;
+    padding-left: 20px;
+}
+
+.menu-item:hover::before {
+    content: "►"; 
+    position: absolute;
+    left: 0;
+    color: #ff3333; 
+}
+
+.subtitle {
+    font-size: 0.9rem;
+    font-weight: normal;
+    color: #777;
+    margin-left: 10px;
+}
+
+/* Content Panels */
+.content-panel {
+    display: none;
+    background: rgba(10, 10, 10, 0.95); /* Slightly transparent dark background */
+    border: 1px solid #444;
+    padding: 2rem;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80%;
+    max-width: 600px;
+    box-shadow: 0px 0px 20px rgba(0,0,0,0.8);
+}
+
+.content-panel:target {
+    display: block;
+}
+
+.content-panel h2 {
+    margin-bottom: 1rem;
+    color: #fff;
+    border-bottom: 1px solid #333;
+    padding-bottom: 0.5rem;
+}
+
+.content-panel p {
+    margin-bottom: 0.8rem;
+    line-height: 1.5;
+}
+
+.back-btn {
+    display: inline-block;
+    margin-top: 1.5rem;
+    color: #ff3333;
+    text-decoration: none;
+    font-weight: bold;
+    border: 1px solid #ff3333;
+    padding: 10px 15px;
+    transition: all 0.2s;
+}
+
+.back-btn:hover {
+    background: #ff3333;
+    color: #000;
+}
+/* ===========================================
+MOBILE RESPONSIVENESS (SMARTPHONES)
+===========================================
+*/
+@media (max-width: 768px) {
+    /* Stack the title and menu vertically instead of side-by-side */
+    .menu-container {
+        flex-direction: column;
+        justify-content: center;
+        text-align: center;
+        padding: 1rem;
+    }
+
+    /* Bring the title back down to the center and shrink it */
+    .title-section {
+        transform: translateY(0);
+        margin-bottom: 2rem;
+        text-align: center;
+    }
+
+    .game-title {
+        font-size: 2.2rem; 
+    }
+
+    /* Center the menu items */
+    .main-menu {
+        align-items: center;
+        gap: 1.5rem;
+    }
+
+    .menu-item {
+        font-size: 1.2rem; 
+    }
+
+    /* Drop subtitles to a new line to save space */
+    .subtitle {
+        display: block;
+        margin-left: 0;
+        margin-top: 5px;
+    }
+
+    /* Make the pop-up panels take up most of the phone screen */
+    .content-panel {
+        width: 95%;
+        padding: 1.5rem;
+    }
+
+    /* Remove the hover shift on mobile to prevent accidental screen jumps */
+    .menu-item:hover {
+        padding-left: 0;
+    }
+    
+    .menu-item:hover::before {
+        display: none; 
+    }
+}
